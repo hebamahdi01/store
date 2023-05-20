@@ -2,7 +2,8 @@
 
 @section('content')
     <div class="mt-3">
-
+        
+        <a href="{{ url('/category/create') }}" class="btn btn-primary">اضافة صنف جديد</a>
 
         <table class="table">
             <thead>
@@ -13,7 +14,6 @@
                 </tr>
             </thead>
             <tbody>
-                <a href="{{ url('/category/create') }}" class="btn btn-primary">اضافة صنف جديد</a>
                 @foreach ($categories as $index => $category)
                     <tr>
                         <th scope="row">{{ ++$index }}</th>
@@ -26,5 +26,7 @@
                 @endforeach
             </tbody>
         </table>
+
+        {{ $categories->links() }}
     </div>
 @endsection

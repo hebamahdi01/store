@@ -3,7 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\HomeCotroller;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\HomeController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,7 +16,7 @@ use App\Http\Controllers\HomeCotroller;
 |
 */
 
-Route::get('/', [HomeCotroller::class, 'index']);
+Route::get('/', [HomeController::class, 'index']);
 
 Route::get('/admin', function () {
     return view("admin.index");
@@ -34,3 +35,14 @@ Route::get('/category/edit/{id}', [CategoryController::class, 'edit']);
 Route::post('/category/store', [CategoryController::class, 'store']);
 Route::post('/category/update/{id}', [CategoryController::class, 'update']);
 Route::get('/category/destroy/{id}', [CategoryController::class, 'destroy']);
+
+Route::get('/orders', [OrderController::class, 'index']);
+Route::get('/orders/create', [OrderController::class, 'create']);
+Route::get('/orders/edit/{id}', [OrderController::class, 'edit']);
+Route::post('/orders/store', [OrderController::class, 'store']);
+Route::post('/orders/update/{id}', [OrderController::class, 'update']);
+Route::get('/orders/destroy/{id}', [OrderController::class, 'destroy']);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

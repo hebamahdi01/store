@@ -184,6 +184,23 @@
               المنتجات
             </a>
           </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url("/orders") }}">
+              <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              الطلبات
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url("/logout") }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+              <span data-feather="shopping-cart" class="align-text-bottom"></span>
+              تسجيل الخروج
+            </a>
+
+            <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">
+              @csrf
+          </form>
+          </li>
           
         </ul>
       </div>

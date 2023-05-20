@@ -5,15 +5,26 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::where("user_id", Auth::id())->paginate();
         
         return view("admin.products.index", compact('products'));
     }
@@ -23,7 +34,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where("user_id", Auth::id())->get();
         return view('admin.products.create', compact('categories'));
     }
 
@@ -32,7 +43,16 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $product = Product::create($request->all());
+        $product = new Product;
+
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->description = $request->description;
+        $product->user_id = Auth::id();
+
+        $product->save();
 
         return redirect()->back();
     }
@@ -51,7 +71,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories = Category::all();
+        $categories = Category::where("user_id", Auth::id())->get();
         return view("admin.products.edit", compact("product", "categories"));
     }
 
@@ -61,7 +81,15 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
-        $product->update($request->all());
+        
+        $product->name = $request->name;
+        $product->category_id = $request->category_id;
+        $product->price = $request->price;
+        $product->quantity = $request->quantity;
+        $product->description = $request->description;
+        $product->user_id = Auth::id();
+
+        $product->save();
 
         return redirect()->back();
     }

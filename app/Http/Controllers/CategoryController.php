@@ -4,15 +4,26 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryController extends Controller
 {
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $categories = Category::all();
+        $categories = Category::where("user_id", Auth::id())->paginate();
         return view("admin.category.index", compact("categories"));
     }
 
@@ -29,7 +40,12 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $category = Category::create($request->all());
+        $category = new Category;
+
+        $category->name = $request->name;
+        $category->user_id = Auth::id();
+
+        $category->save();
 
         return redirect()->back();
     }
@@ -57,7 +73,11 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
-        $category->update($request->all());
+        
+        $category->name = $request->name;
+        $category->user_id = Auth::id();
+
+        $category->save();
 
         return redirect()->back();
     }

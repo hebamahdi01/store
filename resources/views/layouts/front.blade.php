@@ -183,11 +183,12 @@
                             <a class="nav-link active" aria-current="page" href="#">الصفحة الرئيسية</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">حلقة الوصل</a>
+                            <a class="nav-link" href="{{ url('/login') }}">الدخول</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled">رابط غير مفعل</a>
+                            <a class="nav-link" href="{{ url('/register') }}">تسجيل</a>
                         </li>
+                        
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="بحث" aria-label="بحث">
