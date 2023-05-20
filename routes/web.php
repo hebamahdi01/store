@@ -5,6 +5,7 @@ use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\HomeController;
+use App\Models\Product;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,11 +17,12 @@ use App\Http\Controllers\HomeController;
 |
 */
 
-Route::get('/', [HomeController::class, 'index']);
-
-Route::get('/admin', function () {
-    return view("admin.index");
+Route::get('/', function () {
+    $products = Product::take(3)->get();
+    return view("home.index", compact('products'));
 });
+
+Route::get('/admin', [HomeController::class, 'index']);
 
 Route::get('/products', [ProductController::class, 'index']);
 Route::get('/products/create', [ProductController::class, 'create']);

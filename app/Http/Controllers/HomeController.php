@@ -23,7 +23,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::take(3)->get();
-        return view("home.index", compact('products'));
+        return view('admin.index');
     }
 }
