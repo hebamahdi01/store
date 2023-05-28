@@ -182,13 +182,26 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="#">الصفحة الرئيسية</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/login') }}">الدخول</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ url('/register') }}">تسجيل</a>
-                        </li>
-                        
+                        @if(!auth()->id())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/login') }}">الدخول</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/register') }}">تسجيل</a>
+                            </li>
+                        @else
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/admin') }}">لوحة القيادة</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('/logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">تسجيل الخروج</a>
+
+                                <form id="logout-form" action="{{ url('logout') }}" method="POST" class="d-none">
+                                    @csrf
+                                </form>
+                            </li>
+                        @endif
                     </ul>
                     <form class="d-flex" role="search">
                         <input class="form-control me-2" type="search" placeholder="بحث" aria-label="بحث">

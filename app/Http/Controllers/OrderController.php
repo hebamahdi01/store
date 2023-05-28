@@ -80,7 +80,7 @@ class OrderController extends Controller
     public function update(Request $request, $id)
     {
         $order = Order::find($id);
-        
+
 
         $order->name = $request->name;
         $order->user_id = Auth::id();
@@ -100,6 +100,24 @@ class OrderController extends Controller
     {
         $order = Order::find($id);
         $order->delete();
+        return redirect()->back();
+    }
+
+    public function buy($productId)
+    {
+        $product = Product::find($productId);
+        $user = auth()->user();
+
+        $order = new Order;
+
+        $order->name = $user->name . ' buys ' . $product->name;
+        $order->user_id = $user->id;
+        $order->product_id = $productId;
+        $order->quantity = request("quantity", 1);
+        $order->total_price = request("quantity", 1) * $product->price;
+
+        $order->save();
+
         return redirect()->back();
     }
 }

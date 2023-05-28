@@ -2,7 +2,7 @@
 
 @section("content")
 <div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
-    
+
     <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">السابق</span>
@@ -32,7 +32,14 @@
             </svg>
             <h2 class="fw-normal">{{ $product->name }}</h2>
             <p>{{ $product->description }}</p>
-            {{-- <p><a class="btn btn-secondary" href="#">عرض التفاصيل</a></p> --}}
+            @if(auth()->id())
+                <form action="{{ url('/orders/' . $product->id . '/buy') }}" method="post">
+                    @csrf
+                    <input type="number" class="form-control" placeholder="0" value="1" name="quantity" min="0">
+                    <p><button class="btn btn-primary" type="submit">شراء المنتج</button></p>
+                </form>
+
+            @endif
         </div><!-- /.col-lg-4 -->
         @endforeach
     </div><!-- /.row -->

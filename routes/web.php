@@ -18,7 +18,7 @@ use App\Models\Product;
 */
 
 Route::get('/', function () {
-    $products = Product::take(3)->get();
+    $products = Product::all();
     return view("home.index", compact('products'));
 });
 
@@ -44,6 +44,7 @@ Route::get('/orders/edit/{id}', [OrderController::class, 'edit']);
 Route::post('/orders/store', [OrderController::class, 'store']);
 Route::post('/orders/update/{id}', [OrderController::class, 'update']);
 Route::get('/orders/destroy/{id}', [OrderController::class, 'destroy']);
+Route::post('/orders/{productId}/buy', [OrderController::class, 'buy']);
 
 Auth::routes();
 
