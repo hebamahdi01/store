@@ -24,8 +24,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where("user_id", Auth::id())->paginate();
-        
+        $products = auth()->user()->products()->paginate();
+
         return view("admin.products.index", compact('products'));
     }
 
@@ -34,7 +34,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::where("user_id", Auth::id())->get();
+        $categories = auth()->user()->categories()->get();
         return view('admin.products.create', compact('categories'));
     }
 
@@ -71,7 +71,7 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories = Category::where("user_id", Auth::id())->get();
+        $categories = auth()->user()->categories()->get();
         return view("admin.products.edit", compact("product", "categories"));
     }
 
@@ -81,7 +81,7 @@ class ProductController extends Controller
     public function update(Request $request, $id)
     {
         $product = Product::find($id);
-        
+
         $product->name = $request->name;
         $product->category_id = $request->category_id;
         $product->price = $request->price;

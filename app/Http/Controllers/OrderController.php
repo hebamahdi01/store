@@ -24,7 +24,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::where("user_id", Auth::id())->paginate();
+        $orders = auth()->user()->orders()->paginate();
         return view("admin.orders.index", compact('orders'));
     }
 
@@ -33,7 +33,7 @@ class OrderController extends Controller
      */
     public function create()
     {
-        $products = Product::where("user_id", Auth::id())->get();
+        $products = auth()->user()->products()->get();
         return view("admin.orders.create", compact("products"));
     }
 
@@ -69,7 +69,7 @@ class OrderController extends Controller
     public function edit($id)
     {
         $order = Order::find($id);
-        $products = Product::where("user_id", Auth::id())->get();
+        $products = auth()->user()->products()->get();
 
         return view("admin.orders.edit", compact("order", "products"));
     }

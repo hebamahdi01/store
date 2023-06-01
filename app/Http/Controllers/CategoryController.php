@@ -23,7 +23,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where("user_id", Auth::id())->paginate();
+        $categories = auth()->user()->categories()->paginate();
         return view("admin.category.index", compact("categories"));
     }
 
@@ -73,7 +73,7 @@ class CategoryController extends Controller
     public function update(Request $request, $id)
     {
         $category = Category::find($id);
-        
+
         $category->name = $request->name;
         $category->user_id = Auth::id();
 
