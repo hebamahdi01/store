@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FrontController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
@@ -17,10 +18,7 @@ use App\Models\Product;
 |
 */
 
-Route::get('/', function () {
-    $products = Product::all();
-    return view("home.index", compact('products'));
-});
+Route::get('/', [FrontController::class, "index"]);
 
 Route::get('/admin', [HomeController::class, 'index']);
 
@@ -48,4 +46,4 @@ Route::post('/orders/{productId}/buy', [OrderController::class, 'buy']);
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/front', [App\Http\Controllers\HomeController::class, 'index'])->name('front');
